@@ -21,7 +21,7 @@
                     <div class="login-content">
                         <div class="login-form">
                             <div class="form-group text-center">
-                                <label>Thank you for your signing-up</label>
+                                <label>Thank you for your signing-up !</label>
                             </div>
                         </div>
                     </div>

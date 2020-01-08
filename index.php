@@ -50,6 +50,8 @@
 
     <script>
         $('button[type=submit]').on('click', function(event){
+            event.preventDefault();
+            
             var form = $('#login-form')[0];
             var data = new FormData(form);
 
@@ -59,7 +61,7 @@
             else{
                 $.ajax({
                     type: "POST",
-                    url: "controller/login.php",
+                    url: "controller/LoginController/login.php",
                     data: data,
                     contentType: false, // used when using FormData
                     processData: false, // used when using FormData

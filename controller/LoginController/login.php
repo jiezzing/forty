@@ -1,17 +1,17 @@
 <?php
 	session_start(); 
-    require_once '../config/connection.php';
-    require_once '../model/get.php';
+    require_once '../../config/connection.php';
+    require_once '../../model/auth.php';
 
     $con = new connection();
 	$db = $con->connect();
 
-    $get = new Get($db);
+    $auth = new Authentication($db);
 
-    $get->email = $_POST['email'];
-    $get->password = md5($_POST['password']);
+    $auth->email = $_POST['email'];
+    $auth->password = md5($_POST['password']);
 
-    $user = $get->login();
+    $user = $auth->login();
 
     if($row = $user->fetch(PDO::FETCH_ASSOC)){
         $_SESSION['isLoggedIn'] = 1;

@@ -1,13 +1,15 @@
 <?php
-	class Get{
+	class Authentication{
 		private $conn;
+		public $offset = 0;
         
 		public function __construct($db){
 			$this->conn = $db;
 		}
 
+		// Check if email already exist
 		public function isEmailExist(){
-			$query = "SELECT * FROM user WHERE email=?";
+			$query = "SELECT * FROM user, contacts WHERE user.email=contacts.email OR user.email=?";
             
             $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO:: ERRMODE_WARNING);
 			$check = $this->conn->prepare($query);
@@ -19,17 +21,7 @@
             return $check->rowCount();
 		}
 
-		public function currentId(){
-			$query = "SELECT * FROM user";
-            
-            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO:: ERRMODE_WARNING);
-			$count = $this->conn->prepare($query);
-
-            $count->execute();
-            
-            return $count->rowCount();
-		}
-
+		// Login to dashboard
 		public function login(){
 			$query = "SELECT * FROM user WHERE email=? AND password=?";
             
@@ -38,19 +30,6 @@
 
 			$select->bindParam(1, $this->email);
 			$select->bindParam(2, $this->password);
-
-            $select->execute();
-            
-            return $select;
-		}
-
-		public function contacts(){
-			$query = "SELECT * FROM contacts WHERE user_id=?";
-            
-            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO:: ERRMODE_WARNING);
-			$select = $this->conn->prepare($query);
-
-			$select->bindParam(1, $this->user_id);
 
             $select->execute();
             

@@ -1,12 +1,14 @@
 <?php
-	class Store{
+	class Registration{
 		private $conn;
         
 		public function __construct($db){
 			$this->conn = $db;
 		}
 
-		public function register(){
+
+		// Create new user
+		public function create(){
 			$query = "INSERT INTO user(name, company, email, password, status)  VALUES (?, ?, ?, ?, 'active')";
 
 			$this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO:: ERRMODE_WARNING);
@@ -21,6 +23,18 @@
             $insert->execute();
             
 			return $insert;
+		}
+
+		// Used for the current id after registration
+		public function id(){
+			$query = "SELECT * FROM user";
+            
+            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO:: ERRMODE_WARNING);
+			$count = $this->conn->prepare($query);
+
+            $count->execute();
+            
+            return $count->rowCount();
 		}
     }
 ?>

@@ -5,7 +5,7 @@
 <head>
     <title>Forms</title>
     <?php
-        $page = 'register';
+        $page = 'add';
         include '../controller/auth.php';
         include '../css/custom.php';
     ?>
@@ -22,11 +22,11 @@
                             <div class="col-lg-8">
                                 <div class="card">
                                     <div class="card-header">
-                                        <strong>Registration</strong>
+                                        <strong>Add Contact</strong>
                                         <small> Form</small>
                                     </div>
                                     <div class="card-body card-block">
-                                        <form id="registration-form">
+                                        <form id="contact-form">
                                             <div class="form-group">
                                                 <label for="name" class=" form-control-label">Name</label>
                                                 <input type="text" id="name" name="name" placeholder="Name" class="form-control">
@@ -35,31 +35,18 @@
                                                 <label for="company" class=" form-control-label">Company</label>
                                                 <input type="text" id="company" name="company" placeholder="Company" class="form-control">
                                             </div>
-                                            
-                                            <div class="row form-group">
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="email" class=" form-control-label">Email Address</label>
-                                                        <input type="email" id="email" name="email" placeholder="Email Address" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="password" class=" form-control-label">Password</label>
-                                                        <input type="password" id="password" name="password" placeholder="Password" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="confirm-password" class=" form-control-label">Confirm Password</label>
-                                                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" class="form-control">
-                                                    </div>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="email" class=" form-control-label">Email Address</label>
+                                                <input type="email" id="email" name="email" placeholder="Email Address" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="phone" class=" form-control-label">Phone Number</label>
+                                                <input type="phone" id="phone" name="phone" placeholder="Phone Number" class="form-control">
                                             </div>
                                         </form>
                                         <div class="form-group">
-                                            <button id="register" type="submit" class="btn btn-lg btn-info btn-block">
-                                                <span>Register</span>
+                                            <button id="add" type="submit" class="btn btn-lg btn-info btn-block">
+                                                <span>ADD NEW CONTACT</span>
                                             </button>
                                         </div>
                                     </div>
@@ -77,30 +64,27 @@
     ?>
 
     <script>
-        // Registration
-        $('#register').on('click', function(event){
+        // Add new contact
+        $('#add').on('click', function(event){
             event.preventDefault();
-            var form =  $('#registration-form')[0];
+            var form =  $('#contact-form')[0];
             var data = new FormData(form);
             
             if(data.get('name') == '' || data.get('company') == '' || data.get('email') == '' || 
-            data.get('password') == '' || data.get('confirm-password') == ''){
+            data.get('phone') == ''){
                 alert('Some fields are missing');
-            }
-            else if(data.get('password') != data.get('confirm-password')){
-                alert('Password does not match');
             }
             else{
                 $.ajax({
                     type: "POST",
-                    url: "../controller/RegistrationController/register.php",
+                    url: "../controller/ContactController/create.php",
                     data: data,
                     contentType: false,
                     processData: false,
                     success: function(response){
                         if(response == 'success'){
-                            alert('Successfully registered');
-                            window.location.href = "../pages/thankyou.php";
+                            alert('Successfully added');
+                            window.location.href = '../pages/dashboard.php';
                         }
                         else if(response == 'exist'){
                             alert('Email already exist');
