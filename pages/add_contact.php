@@ -18,6 +18,13 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
+
+                            <div class="table-data__tool">
+                                <div class="table-data__tool-left">
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small" onclick="back()">
+                                        <i class="zmdi zmdi-arrow-left"></i>go back to dashboard</button>
+                                </div>
+                            </div>
                         <div class="row">
                             <div class="col-lg-8">
                                 <div class="card">
@@ -64,6 +71,11 @@
     ?>
 
     <script>
+        // Go to dashboard
+        function back() {
+            window.location.href = '../pages/dashboard.php';
+        }
+
         // Add new contact
         $('#add').on('click', function(event){
             event.preventDefault();
